@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUserById, addUser, loginUser, updateUser, getUserRelatedJobs,
+const { addUser, loginUser, getUserById, updateUser, getUserRelatedJobs,
     updateUserRelatedJobs } = require("../controllers/userCtrl");
 
 router.post('/signup', addUser);

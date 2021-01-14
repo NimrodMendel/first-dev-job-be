@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 /* Routers */
-const userRouter = require("../routes/userRouter");
-const jobRouter = require("../routes/jobRouter");
+const userRouter = require("./routes/userRouter");
+const jobRouter = require("./routes/jobRouter");
 
 /* Middleware */
 app.use(bodyParser.urlencoded({ extended: false }));
