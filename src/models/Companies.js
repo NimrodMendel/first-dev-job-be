@@ -22,6 +22,9 @@ const companySchema = new mongoose.Schema({
       default: null,
     },
   ],
+  logo: {
+    type: String,
+  },
 });
 
 const Company = mongoose.model("Company", companySchema);
