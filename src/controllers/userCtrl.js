@@ -1,5 +1,4 @@
-const User = require("../models/user");
-const jwt = require('jsonwebtoken');
+
 
 const addUser = async (req,res) => {
 
@@ -25,3 +24,7 @@ const updateUserRelatedJobs = async (req,res) => {
 
 } 
 
+module.exports = {
+    addUser, loginUser ,getUserById,
+    updateUser, getUserRelatedJobs, updateUserRelatedJobs
+};
