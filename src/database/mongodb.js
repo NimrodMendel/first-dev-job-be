@@ -14,4 +14,3 @@ mongoose
     console.log("Could not connect to database 🔴");
   });
 
-  
