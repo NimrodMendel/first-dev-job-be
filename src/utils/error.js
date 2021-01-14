@@ -1,4 +1,5 @@
 class BadParamsError extends Error {
+
   constructor(...params) {
     super(...params);
     if (Error.captureStackTrace) {
@@ -6,6 +7,14 @@ class BadParamsError extends Error {
     }
     this.name = "Bad Params Error";
   }
+
+    constructor(...params) {
+        super(...params);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, BadParamsError);
+        }
+        this.name = "Bad Params Error"
+    }
 }
 
 // try {
@@ -14,13 +23,22 @@ class BadParamsError extends Error {
 //     console.log(e.stack);
 // }
 class AuthorizationError extends Error {
+
   constructor(...params) {
     super(...params);
   }
+
+    constructor(...params) {
+        super(...params);
+    }
+
+
+
 }
 
 module.exports.BadParamsError = BadParamsError;
 module.exports.AuthorizationError = AuthorizationError;
+
 
 /* How to throw the custom error
 try {
@@ -31,4 +49,3 @@ try {
     }
 }
 
-*/
