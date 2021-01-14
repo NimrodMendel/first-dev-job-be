@@ -22,8 +22,11 @@ app.use(
   })
 );
 
+
+
 app.use('/api/users', userRouter);
 app.use('/api/jobs', jobRouter);
+
 
 app.get("/", (req, res) => {
   try {
