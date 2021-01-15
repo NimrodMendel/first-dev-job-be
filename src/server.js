@@ -1,4 +1,5 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -6,10 +7,6 @@ const cors = require("cors");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-
-/* Routers */
-const userRouter = require("./routes/userRouter");
-const jobRouter = require("./routes/jobRouter");
 
 /* Middleware */
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,10 +19,25 @@ app.use(
   })
 );
 
+app.use('/api/users', require("./routes/userRouter"));
+app.use('/api/jobs', require("./routes/jobRouter"));
+
+mongoose
+  .connect(process.env.CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then(() => {
+    console.log("Connected to database 🟢");
+  })
+  .catch((error) => {
+    console.log(error);
+    console.log("Could not connect to database 🔴");
+  });
 
 
-app.use('/api/users', userRouter);
-app.use('/api/jobs', jobRouter);
+
 
 
 app.get("/", (req, res) => {
@@ -35,6 +47,8 @@ app.get("/", (req, res) => {
     res.status(404).send(error.message);
   }
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port http://localhost:${PORT}`);

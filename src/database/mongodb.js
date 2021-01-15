@@ -1,16 +1,22 @@
-const mongoose = require("mongoose");
+const { ObjectId } = require('mongodb');
+const { User } = require('../models/User');
 
-/* Database connection */
-mongoose
-  .connect(process.env.CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => {
-    console.log("Connected to database 🟢");
-  })
-  .catch((error) => {
-    console.log("Could not connect to database 🔴");
-  });
 
+
+
+
+
+
+
+
+
+class userMethods {
+
+  async get(id) {
+    //console.log(id);
+    const user = await User.findOne({_id : id});
+    console.log(user);
+  }
+}
+
+module.exports = { userMethods }
