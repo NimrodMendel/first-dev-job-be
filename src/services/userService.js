@@ -1,6 +1,7 @@
-class User {
+const {userMethods} = require('../database/mongodb'); 
+class user {
     constructor() {
-        this.db = {}
+        this.db = new userMethods;
     }
     getById = (id) => {
         return this.db.get(id);
@@ -17,4 +18,4 @@ class User {
 
 }
 
-module.exports = new User;
+module.exports = new user;
