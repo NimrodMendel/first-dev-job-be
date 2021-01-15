@@ -2,6 +2,9 @@ const User = require('../services/userService');
 const { hashPassword, comparePasswords } = require('../utils/helper');
 
 const addUser = async (req, res) => {
+    if(!req.body.user) {
+        return res.send({error: "missing user to add"});
+    }
     const NewUser = req.body.user;
     if (await User.getByEmail(NewUser.email)) {
         return res.send({ error: "email already exists" })
@@ -11,11 +14,10 @@ const addUser = async (req, res) => {
         NewUser.password = hasedPassword;
         const userDB = await User.add(NewUser);
         console.log(userDB);
-
     } catch (e) {
-        console.log(e);
+        return res.send(e)
     }
-    res.send("added user");
+    res.status(201).send("user added successfully");
 }
 
 const loginUser = async (req, res) => {
@@ -35,7 +37,7 @@ const getUserById = async (req, res) => {
         savedJobs: userDB.savedJobs,
         appliedJobs: userDB.appliedJobs
     }
-    res.send(user);
+    res.json(user);
 }
 
 const updateUser = async (req, res) => {

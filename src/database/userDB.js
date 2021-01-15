@@ -10,8 +10,6 @@ class userMethods {
         } catch (e) {
             return {error : "ID doesn't exist"};
         }
-
-
     }
 
     async getByEmail(email) {
