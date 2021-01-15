@@ -27,11 +27,10 @@ const addUser = async (req, res) => {
 }
 
 const loginUser = async (req, res) => {
-    if (!req.body.user) {
+    const user = req.body.user;
+    if (!user || !user.email || !user.password) {
         return res.send(errors.missingParams);
     }
-    console.log(req.body.user)
-    const user = req.body.user;
     const userDB = await User.getByEmail(user.email);
     if (!userDB) {
         return res.send(errors.incorrectLoginParams);
