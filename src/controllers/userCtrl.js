@@ -3,6 +3,11 @@ const { hashPassword, comparePasswords, createToken } = require('../utils/helper
 const errors = require('../utils/error');
 
 
+const test = async (req,res) => {
+    console.log(req.cookies.token);
+    res.send("pass test");
+}
+
 const addUser = async (req, res) => {
     if (!req.body.user) {
         return res.send(errors.missingParams);
@@ -16,29 +21,35 @@ const addUser = async (req, res) => {
         NewUser.password = hasedPassword;
         await User.add(NewUser);
     } catch (e) {
-        return res.send(e)
+        return res.send({ error: e })
     }
-    res.status(201).send("user added successfully");
+    res.status(201).send({ success: "user added successfully" });
 }
 
 const loginUser = async (req, res) => {
     if (!req.body.user) {
         return res.send(errors.missingParams);
     }
+    console.log(req.body.user)
     const user = req.body.user;
     const userDB = await User.getByEmail(user.email);
     if (!userDB) {
         return res.send(errors.incorrectLoginParams);
     }
-    const isEqual = await comparePasswords(user.password, userDB.password);
-    if (!isEqual) {
-        return res.send(errors.incorrectLoginParams);
+    try {
+        const isEqual = await comparePasswords(user.password, userDB.password);
+        if (!isEqual) {
+            return res.send(errors.incorrectLoginParams);
+        }
+        const token = createToken(userDB._id);
+        res.cookie('token', token, {
+            maxAge: 24 * 60 * 60,
+            httpOnly: true
+        });
+    } catch (e) {
+        console.log(e);
+        return res.send({ error: e })
     }
-    const token = createToken(userDB._id);
-    res.cookie('token', token, {
-        maxAge: 24 * 60 * 60,
-        httpOnly: true
-    });
     res.json({ id: userDB._id })
 }
 
@@ -59,6 +70,7 @@ const getUserById = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+    console.log(req.cookies);
 
 }
 
@@ -71,6 +83,6 @@ const updateUserRelatedJobs = async (req, res) => {
 }
 
 module.exports = {
-    addUser, loginUser, getUserById,
+    test, addUser, loginUser, getUserById,
     updateUser, getUserRelatedJobs, updateUserRelatedJobs
 };
