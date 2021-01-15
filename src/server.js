@@ -36,10 +36,6 @@ mongoose
     console.log("Could not connect to database 🔴");
   });
 
-
-
-
-
 app.get("/", (req, res) => {
   try {
     res.send("Welcome to first-dev-job server!");
@@ -47,7 +43,6 @@ app.get("/", (req, res) => {
     res.status(404).send(error.message);
   }
 });
-
 
 
 app.listen(PORT, () => {

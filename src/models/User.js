@@ -39,6 +39,7 @@ const userSchema = mongoose.Schema({
     },
     role: {
         type: String,
+        required: [true, "user must have a role"],
         enum: ["Admin", "Employee", "Employer"],
     },
     savedJobs: [
