@@ -1,19 +1,20 @@
 const User = require('../services/userService');
-const { hashPassword, comparePasswords } = require('../utils/helper');
+const { hashPassword, comparePasswords, createToken } = require('../utils/helper');
+const errors = require('../utils/error');
+
 
 const addUser = async (req, res) => {
-    if(!req.body.user) {
-        return res.send({error: "missing user to add"});
+    if (!req.body.user) {
+        return res.send(errors.missingParams);
     }
     const NewUser = req.body.user;
     if (await User.getByEmail(NewUser.email)) {
-        return res.send({ error: "email already exists" })
+        return res.send(errors.emailExist);
     }
     try {
         const hasedPassword = await hashPassword(NewUser.password);
         NewUser.password = hasedPassword;
-        const userDB = await User.add(NewUser);
-        console.log(userDB);
+        await User.add(NewUser);
     } catch (e) {
         return res.send(e)
     }
@@ -21,13 +22,30 @@ const addUser = async (req, res) => {
 }
 
 const loginUser = async (req, res) => {
-
+    if (!req.body.user) {
+        return res.send(errors.missingParams);
+    }
+    const user = req.body.user;
+    const userDB = await User.getByEmail(user.email);
+    if (!userDB) {
+        return res.send(errors.incorrectLoginParams);
+    }
+    const isEqual = await comparePasswords(user.password, userDB.password);
+    if (!isEqual) {
+        return res.send(errors.incorrectLoginParams);
+    }
+    const token = createToken(userDB._id);
+    res.cookie('token', token, {
+        maxAge: 24 * 60 * 60,
+        httpOnly: true
+    });
+    res.json({ id: userDB._id })
 }
 
 const getUserById = async (req, res) => {
     const userDB = await User.getById(req.params.id);
     if (!userDB || userDB.error) {
-        return res.send({ error: "ID doesn't exist" });
+        return res.send(errors.incorrectID);
     }
     const user = {
         firstName: userDB.firstName,

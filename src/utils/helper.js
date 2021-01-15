@@ -7,8 +7,7 @@ const hashPassword = async (password) => {
         const hasedPassword = await bcrypt.hash(password, 10);
         return hasedPassword;
     } catch (e) {
-        // return { error: e };
-        throw new Error(e);
+        return { error: e };
     }
 }
 
@@ -19,9 +18,13 @@ const comparePasswords = async (password, hasedPassword) => {
         }
         return false;
     } catch (e) {
-        // return { error: e };
-        throw new Error(e);
+        return { error: e };
     }
 }
 
-module.exports = { hashPassword, comparePasswords }
+const createToken = (id) => {
+    const accessToken = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET);
+    return accessToken;
+}
+
+module.exports = { hashPassword, comparePasswords, createToken }
