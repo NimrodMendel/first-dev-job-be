@@ -1,6 +1,3 @@
+const getAllJobs = async (req, res) => {};
 
-const getAllJobs = async (req,res) => {
-    
-}
-
-module.exports = {getAllJobs} ;
+module.exports = { getAllJobs };
