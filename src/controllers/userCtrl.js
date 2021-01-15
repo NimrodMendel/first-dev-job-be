@@ -23,9 +23,18 @@ const loginUser = async (req, res) => {
 }
 
 const getUserById = async (req, res) => {
-    const user = await User.getById(req.params.id);
-    //after adding users with password need to add here object 
-    //with only the relevent fields to return
+    const userDB = await User.getById(req.params.id);
+    if (!userDB || userDB.error) {
+        return res.send({ error: "ID doesn't exist" });
+    }
+    const user = {
+        firstName: userDB.firstName,
+        lastName: userDB.lastName,
+        email: userDB.email,
+        phoneNumber: userDB.phoneNumber,
+        savedJobs: userDB.savedJobs,
+        appliedJobs: userDB.appliedJobs
+    }
     res.send(user);
 }
 

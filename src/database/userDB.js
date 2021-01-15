@@ -1,11 +1,17 @@
-const { ObjectID } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const { User } = require('../models/User');
 
 class userMethods {
 
     async get(id) {
-        const user = await User.findOne({ _id: ObjectID(id) });
-        return user;
+        try {
+            const user = await User.findOne({ _id: ObjectId(id) });
+            return user;
+        } catch (e) {
+            return {error : "ID doesn't exist"};
+        }
+
+
     }
 
     async getByEmail(email) {
