@@ -1,25 +1,24 @@
 const express = require("express");
 const router = express.Router();
+const {auth} = require('../middlewares/auth');
 
-const {
-  addUser,
-  loginUser,
-  getUserById,
-  updateUser,
-  getUserRelatedJobs,
-  updateUserRelatedJobs,
-} = require("../controllers/userCtrl");
+const { test, addUser, loginUser, getUserById, updateUser, getUserRelatedJobs,
+    updateUserRelatedJobs } = require("../controllers/userCtrl");
 
-router.post("/signup", addUser);
+router.get('/' , test)
 
-router.post("/login", loginUser);
+router.post('/signup', addUser);
 
-// all below will be protected to authorized user
-router.get("/:id", getUserById);
+router.post('/login', loginUser);
 
-router.put("/:id", updateUser);
+// all routes below protected to authenticated user
+router.get('/:id',auth, getUserById);
 
-router.get("/:id/jobs", getUserRelatedJobs);
+router.put('/:id',auth, updateUser)
+
+router.get('/:id/jobs',auth, getUserRelatedJobs)
+
+router.put('/:id/jobs',auth, updateUserRelatedJobs)
 
 router.put("/:id/jobs", updateUserRelatedJobs);
 
