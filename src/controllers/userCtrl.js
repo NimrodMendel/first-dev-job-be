@@ -3,7 +3,7 @@ const { hashPassword, comparePasswords, createToken } = require('../utils/helper
 const errors = require('../utils/error');
 
 
-const test = async (req,res) => {
+const test = async (req, res) => {
     console.log(req.cookies.token);
     res.send("pass test");
 }
@@ -42,7 +42,7 @@ const loginUser = async (req, res) => {
         }
         const token = createToken(userDB._id);
         res.cookie('token', token, {
-            maxAge: 24 * 60 * 60,
+            maxAge: 24 * 60 * 60 * 100,
             httpOnly: true
         });
     } catch (e) {
@@ -69,13 +69,22 @@ const getUserById = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-    console.log(req.cookies);
 
+    
 }
 
 const getUserRelatedJobs = async (req, res) => {
-
+    const userDB = await User.getById(req.params.id);
+    if (!userDB || userDB.error) {
+        return res.send(errors.incorrectID);
+    }
+    const userRelatedJobs = {
+        savedJobs: userDB.savedJobs,
+        appliedJobs: userDB.appliedJobs
+    }
+    res.json(userRelatedJobs);
 }
+
 
 const updateUserRelatedJobs = async (req, res) => {
 
