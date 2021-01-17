@@ -2,7 +2,7 @@ const Job = require("../services/jobService");
 const errors = require("../utils/error");
 
 const getJobById = async (req, res) => {
-  const { jobId } = req.params;
+  const { jobId } = req.params.id;
 
   if (!jobId) {
     res.status(400).send(errors.missingParams);
@@ -42,14 +42,10 @@ const addNewJob = async (req, res) => {
       salary,
     };
 
-    //console.log(newJob);
-
     const addedJob = await Job.addJob(newJob);
 
-    console.log(addedJob);
-
     if (addedJob) {
-      res.status(201).send({ addJob });
+      res.status(201).send({ addedJob });
     }
   } catch (error) {
     res.status(400).send({ error });

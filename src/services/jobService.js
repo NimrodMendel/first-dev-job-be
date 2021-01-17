@@ -13,7 +13,7 @@ class Job {
     return this.db.getById(jid);
   };
 
-  add = (jobDetails) => {
+  addJob = (jobDetails) => {
     return this.db.addJob(jobDetails);
   };
 
