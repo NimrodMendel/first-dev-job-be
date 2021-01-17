@@ -4,94 +4,92 @@ class jobsMethods {
   async getById(jid) {
     try {
       const jobPost = await Job.findById(jid);
-      res.status(200).send({ jobPost });
+      return jobPost;
     } catch (e) {
-      res.status(400).send({ error: e });
+      return { error: e.message };
     }
   }
 
   async getAll() {
     try {
       const jobPosts = await Job.find();
-      res.status(200).send({ jobPosts });
+      return jobPosts;
     } catch (e) {
-      res.status(400).send({ error: e });
+      return { error: e.message };
     }
   }
 
   async addJob(jobDetails) {
+    console.log(jobDetails);
     try {
       const newJob = { ...jobDetails };
       const addedJob = await Job.create(newJob);
-      res.status(201).send({ addedJob });
+      return addedJob;
     } catch (e) {
-      res.status(400).send({ error: e });
+      return { error: e.message };
     }
   }
 
   async getAllLikes(jid) {
     try {
-      const { likes, likesCounter } = await Job.findById(jid);
-      res.status(200).send({
-        likes,
-        likesCounter,
-      });
+      const { likes } = await Job.findById(jid);
+      return likes;
     } catch (e) {
-      res.status(400).send({ error: e });
+      return { error: e.message };
     }
   }
 
   async getJobLocation(jid) {
     try {
       const location = await Job.findById(jid, { location: 1 });
-      res.status(200).send({ location });
+      return location;
     } catch (e) {
-      res.status(400).send({ error: e });
+      return { error: e.message };
     }
   }
 
   async getSaraly(jid) {
     try {
-      const salary = await Job.findById(jid, { salary: 1 }); //  Get only the salary
-      res.status(200).send({ salary });
+      const salary = await Job.findById(jid, { salary: 1 });
+      return salary;
     } catch (e) {
-      res.status(400).send({ error: e });
+      return { error: e.message };
     }
   }
 
   async getSalariesAsc() {
     try {
-      const sortedSalariesDesc = await Job.find().sort({ salary: 1 }); //  Get only the salary
-      res.status(200).send({ sortedSalariesDesc });
+      const sortedSalariesDesc = await Job.find().sort({ salary: 1 });
+      return sortedSalariesDesc;
     } catch (e) {
-      res.status(400).send({ error: e });
+      return { error: e.message };
     }
   }
 
   async getSalariesDesc() {
     try {
-      const sortedSalariesAsc = await Job.find().sort({ salary: -1 }); //  Get only the salary
-      res.status(200).send({ sortedSalariesAsc });
+      const sortedSalariesAsc = await Job.find().sort({ salary: -1 });
+      return sortedSalariesAsc;
     } catch (e) {
-      res.status(400).send({ error: e });
+      return { error: e.message };
     }
   }
 
   async getLiksAsc() {
     try {
-      const sortedLikesAsc = await Job.find().sort({ likesCounter: 1 }); //  Get only the salary
-      res.status(200).send({ sortedLikesAsc });
+      const sortedLikesAsc = await Job.find().sort({ likesCounter: 1 });
+      return sortedLikesAsc;
     } catch (e) {
-      res.status(400).send({ error: e });
+      return { error: e.message };
     }
   }
 
   async getLiksDesc() {
     try {
-      const sortedLikesDesc = await Job.find().sort({ likesCounter: -1 }); //  Get only the salary
-      res.status(200).send({ sortedLikesDesc });
+      const sortedLikesDesc = await Job.find().sort({ likesCounter: -1 });
+      return sortedLikesDesc;
     } catch (e) {
-      res.status(400).send({ error: e });
+      return { error: e.message };
     }
   }
 }
