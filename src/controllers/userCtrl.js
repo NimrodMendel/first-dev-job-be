@@ -1,6 +1,10 @@
-const User = require('../services/userService');
-const { hashPassword, comparePasswords, createToken } = require('../utils/helper');
-const errors = require('../utils/error');
+const User = require("../services/userService");
+const {
+    hashPassword,
+    comparePasswords,
+    createToken,
+} = require("../utils/helper");
+const errors = require("../utils/error");
 
 
 const test = async (req, res) => {
@@ -9,10 +13,10 @@ const test = async (req, res) => {
 }
 
 const addUser = async (req, res) => {
-    if (!req.body.user) {
+    const NewUser = req.body.user;
+    if (!NewUser) {
         return res.send(errors.missingParams);
     }
-    const NewUser = req.body.user;
     if (await User.getByEmail(NewUser.email)) {
         return res.send(errors.emailExist);
     }
@@ -21,10 +25,10 @@ const addUser = async (req, res) => {
         NewUser.password = hasedPassword;
         await User.add(NewUser);
     } catch (e) {
-        return res.send({ error: e })
+        return res.send({ error: e });
     }
     res.status(201).send({ success: "user added successfully" });
-}
+};
 
 const loginUser = async (req, res) => {
     const user = req.body.user;
@@ -49,8 +53,8 @@ const loginUser = async (req, res) => {
         console.log(e);
         return res.send({ error: e })
     }
-    res.json({ id: userDB._id })
-}
+    res.json({ id: userDB._id });
+};
 
 const getUserById = async (req, res) => {
     const userDB = await User.getById(req.params.id);
@@ -63,14 +67,14 @@ const getUserById = async (req, res) => {
         email: userDB.email,
         phoneNumber: userDB.phoneNumber,
         savedJobs: userDB.savedJobs,
-        appliedJobs: userDB.appliedJobs
-    }
+        appliedJobs: userDB.appliedJobs,
+    };
     res.json(user);
-}
+};
 
 const updateUser = async (req, res) => {
 
-    
+
 }
 
 const getUserRelatedJobs = async (req, res) => {
@@ -86,11 +90,15 @@ const getUserRelatedJobs = async (req, res) => {
 }
 
 
-const updateUserRelatedJobs = async (req, res) => {
+const updateUserRelatedJobs = async (req, res) => { }
 
-}
 
 module.exports = {
-    test, addUser, loginUser, getUserById,
-    updateUser, getUserRelatedJobs, updateUserRelatedJobs
+    test,
+    addUser,
+    loginUser,
+    getUserById,
+    updateUser,
+    getUserRelatedJobs,
+    updateUserRelatedJobs
 };

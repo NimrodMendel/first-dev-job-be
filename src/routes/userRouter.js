@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const {auth} = require('../middlewares/auth');
 
@@ -20,5 +20,6 @@ router.get('/:id/jobs',auth, getUserRelatedJobs)
 
 router.put('/:id/jobs',auth, updateUserRelatedJobs)
 
+router.put("/:id/jobs", updateUserRelatedJobs);
 
 module.exports = router;

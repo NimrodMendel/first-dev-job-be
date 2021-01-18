@@ -45,14 +45,14 @@ const userSchema = mongoose.Schema({
     savedJobs: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Jobs",
+            ref: "Job",
             default: null,
         },
     ],
     appliedJobs: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Jobs",
+            ref: "Job",
             default: null,
         },
     ],
