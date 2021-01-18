@@ -19,13 +19,29 @@ const jobSchema = new mongoose.Schema({
   },
   company: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Companies",
+    ref: "Company",
   },
   salary: {
-    type: String,
+    type: Number,
   },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  likesCounter: {
+    type: Number,
+    default: 0,
+  },
+  comments: [
+    {
+      type: Object,
+      default: null,
+    },
+  ],
 });
 
-const Job = mongoose.model("Job", jobSchema);
+const Job = mongoose.model("job", jobSchema);
 
 module.exports = { Job };
