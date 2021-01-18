@@ -12,6 +12,10 @@ const {
   getSortedBySalaryDesc,
 } = require("../controllers/jobCtrl");
 
+router.get("/salaryasc", getSortedBySalaryAsc);
+
+router.get("/salarydesc", getSortedBySalaryDesc);
+
 router.post("/", addNewJob);
 
 router.get("/", getAllJobs);
@@ -24,8 +28,6 @@ router.get("/:id/location", getJobLocation);
 
 router.get("/:id/salary", getJobSalary);
 
-router.get("/salaryasc", getSortedBySalaryAsc);
 
-router.get("/salarydesc", getSortedBySalaryDesc);
 
 module.exports = router;
