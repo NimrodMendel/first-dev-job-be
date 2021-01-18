@@ -23,11 +23,11 @@ const addUser = async (req, res) => {
     try {
         const hasedPassword = await hashPassword(NewUser.password);
         NewUser.password = hasedPassword;
-        await User.add(NewUser);
+        const addedUser = await User.add(NewUser);
+        res.status(201).send({ id: addedUser._id });
     } catch (e) {
         return res.send({ error: e });
     }
-    res.status(201).send({ success: "user added successfully" });
 };
 
 const loginUser = async (req, res) => {
@@ -35,7 +35,7 @@ const loginUser = async (req, res) => {
     if (!user || !user.email || !user.password) {
         return res.send(errors.missingParams);
     }
-    const userDB = await User.getByEmail(user.email);
+    const userDB = await User.getByEmail(user.email); 
     if (!userDB) {
         return res.send(errors.incorrectLoginParams);
     }

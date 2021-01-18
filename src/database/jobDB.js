@@ -20,14 +20,9 @@ class jobMethods {
   }
 
   async addJob(jobDetails) {
-    console.log(jobDetails);
-    try {
-      const newJob = { ...jobDetails };
-      const addedJob = await Job.create(newJob);
-      return addedJob;
-    } catch (e) {
-      return { error: e.message };
-    }
+    const newJob = { ...jobDetails };
+    const addedJob = await Job.create({...newJob});
+    return addedJob;
   }
 
   async getAllLikes(jid) {

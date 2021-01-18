@@ -8,13 +8,11 @@ const addNewJob = async (req, res) => {
   }
   try {
     const addedJob = await Job.addJob(newJob);
-    //console.log(addedJob);
     if (addedJob) {
-      res.status(201).send({ addJob });
+      res.status(201).send({ id: addedJob._id });
     }
   } catch (e) {
-    console.log(e);
-    res.status(400).send(e);
+    res.status(400).send({ error: e });
   }
 };
 

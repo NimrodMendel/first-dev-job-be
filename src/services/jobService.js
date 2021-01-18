@@ -11,7 +11,7 @@ class Job {
   getById = (id) => {
     return this.db.getById(id);
   };
-  add = (jobDetails) => {
+  addJob = (jobDetails) => {
     return this.db.addJob(jobDetails);
   };
   getAllLikes = (id) => {
