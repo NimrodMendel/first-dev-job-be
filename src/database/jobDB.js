@@ -17,7 +17,6 @@ class jobMethods {
     return addedJob;
   }
 
-
   async getAllLikes(jid) {
       const { likes } = await Job.findById(jid);
       return likes;
