@@ -26,7 +26,7 @@ class jobMethods {
   async updateJob(jid, jobDetails) {
     console.log(jobDetails);
     const updated = await Job.findByIdAndUpdate(
-      { _id: ObjectId(jid) },
+      { _id: jid },
       { ...jobDetails },
       {
         omitUndefined: true,

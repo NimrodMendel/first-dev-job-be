@@ -35,7 +35,7 @@ const loginUser = async (req, res) => {
     if (!user || !user.email || !user.password) {
         return res.send(errors.missingParams);
     }
-    const userDB = await User.getByEmail(user.email); 
+    const userDB = await User.getByEmail(user.email);
     if (!userDB) {
         return res.send(errors.incorrectLoginParams);
     }
@@ -73,8 +73,19 @@ const getUserById = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-
-
+    const infoToUpdate = req.body;
+    const id = req.params.id;
+    try {
+        if(infoToUpdate.password) {
+            const hasedPassword = await hashPassword(infoToUpdate.password);
+            infoToUpdate.password = hasedPassword;
+        }
+        const updatedUser = await User.updateProfile(id, infoToUpdate);
+        console.log(updatedUser);
+        res.json(updatedUser);
+    } catch (e) {
+        return res.send({ error: e });
+    }
 }
 
 const getUserRelatedJobs = async (req, res) => {
