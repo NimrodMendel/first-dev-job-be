@@ -38,6 +38,28 @@ const getAllJobs = async (req, res) => {
   }
 };
 
+const updateJob = async (req, res) => {
+  const jid = req.params.id;
+
+  if (!req.body) {
+    const job = await Job.getById(jid);
+    res.send({ job });
+  }
+
+  try {
+    const updateDetails = {
+      title: req.body.title,
+      description: req.body.description,
+      location: req.body.location,
+      salary: req.body.salary,
+    };
+    const updatedJob = await Job.editJob(jid, updateDetails);
+    res.send({ updatedJob });
+  } catch (e) {
+    res.send({ error: e.message });
+  }
+};
+
 const getAllLikes = async (req, res) => {
   const jobId = req.params.id;
   if (!jobId) {
@@ -98,6 +120,7 @@ const getSortedBySalaryDesc = async (req, res) => {
 module.exports = {
   addNewJob,
   getJobById,
+  updateJob,
   getAllJobs,
   getAllLikes,
   getJobLocation,
