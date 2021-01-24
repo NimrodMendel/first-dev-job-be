@@ -1,5 +1,5 @@
 require("dotenv").config();
-const mongoose = require("mongoose");
+require("./database/mongodb");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -21,19 +21,20 @@ app.use(cookieParser());
 app.use('/api/users', require("./routes/userRouter"));
 app.use('/api/jobs', require("./routes/jobRouter"));
 
-mongoose
-  .connect(process.env.CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => {
-    console.log("Connected to database 🟢");
-  })
-  .catch((error) => {
-    console.log(error);
-    console.log("Could not connect to database 🔴");
-  });
+// mongoose
+//   .connect(process.env.CONNECTION_STRING, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useCreateIndex: true,
+//   })
+
+//   .then(() => {
+//     console.log("Connected to database 🟢");
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//     console.log("Could not connect to database 🔴");
+//   });
 
 app.get("/", (req, res) => {
   try {
