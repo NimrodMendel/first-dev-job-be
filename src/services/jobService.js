@@ -20,6 +20,11 @@ class Job {
   getJobLocation = (id) => {
     return this.db.getJobLocation(id);
   };
+
+  editJob = (id, details) => {
+    return this.db.updateJob(id, details);
+  };
+
   getSaraly = (id) => {
     return this.db.getSaraly(id);
   };

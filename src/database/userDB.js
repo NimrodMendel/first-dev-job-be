@@ -21,6 +21,12 @@ class userMethods {
         const userDB = await User.create({ ...user });
         return userDB;
     }
+
+    async updateProfile(id, updatedInfo) {
+        const updatedUserDB = await User.findByIdAndUpdate({_id:id}, {...updatedInfo}, {new: true, omitUndefined: true, useFindAndModify: false, runValidators:true});
+        console.log(updatedUserDB)
+        return updatedUserDB;
+    }   
 }
 
 

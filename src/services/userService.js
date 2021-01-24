@@ -12,8 +12,8 @@ class user {
   add = (user) => {
     return this.db.add(user);
   };
-  updateById = (id, updatedInfo) => {
-    return this.db.update(id, updatedInfo);
+  updateProfile = (id, updatedInfo) => {
+    return this.db.updateProfile(id, updatedInfo);
   };
   updateRealatedJobs = (updatedInfo) => {
     return this.db.updateRealatedJobs(updatedInfo);
