@@ -55,7 +55,7 @@ const login = async (req, res) => {
   }
 };
 
-getCompanyById = async (req, res) => {
+const getCompanyById = async (req, res) => {
   const { cid } = req.params;
 
   if (!cid) {
@@ -70,4 +70,42 @@ getCompanyById = async (req, res) => {
   }
 };
 
-module.exports = { login, addCompany };
+const updateCompany = async (req, res) => {
+  const detailsToUpdate = req.body;
+  const { cid } = req.params.id;
+
+  if (!detailsToUpdate) {
+    const company = await Company.getById(cid);
+    res.send({ company });
+  }
+
+  try {
+    if (detailsToUpdate.password) {
+      const hashedPassword = await hashPassword(detailsToUpdate.password);
+      detailsToUpdate.password = hashedPassword;
+    }
+    const updatedCopmany = await Company.update(cid, detailsToUpdate);
+    res.send({ updatedCopmany });
+  } catch (err) {
+    res.send({ error: err.message });
+  }
+};
+
+const getComanyJobs = async (req, res) => {
+  const { cid } = req.params.id;
+
+  try {
+    const copmanyJobs = await Company.getCompanyJobs(cid);
+    res.send({ copmanyJobs });
+  } catch (err) {
+    res.send({ error: err.message });
+  }
+};
+
+module.exports = {
+  login,
+  addCompany,
+  getCompanyById,
+  updateCompany,
+  getComanyJobs,
+};

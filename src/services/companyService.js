@@ -20,6 +20,10 @@ class Company {
   update = (cid, companyDetails) => {
     return this.db.updateCopmanyProfile(cid, companyDetails);
   };
+
+  getCompanyJobs = (cid) => {
+    return this.db.getJobsPostedByCompany(cid);
+  };
 }
 
 module.exports = new Company();

@@ -1,3 +1,4 @@
+const e = require("express");
 const { Company } = require("../models/Company");
 
 class companyMethods {
@@ -37,6 +38,15 @@ class companyMethods {
         }
       );
       return updatedCompany;
+    } catch (e) {
+      return { error: e.message };
+    }
+  }
+
+  async getJobsPostedByCompany(cid) {
+    try {
+      const companyJobs = await Company.findById(cid, { jobs: 1 });
+      return jobs;
     } catch (e) {
       return { error: e.message };
     }
