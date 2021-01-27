@@ -2,6 +2,17 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 const companySchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: [true, "Email is required"],
+    unique: true,
+    validate: [validator.isEmail, "Must be a valid email"],
+  },
+  password: {
+    type: String,
+    required: [true, "Password is required"],
+    minlength: [6, "Password must be minimum 6 characters long"],
+  },
   name: {
     type: String,
     required: [true, "Company name is required"],
