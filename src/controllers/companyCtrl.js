@@ -39,9 +39,8 @@ const login = async (req, res) => {
   if (!companyExistsInDb) {
     return res.send(errors.incorrectLoginParams);
   }
-
   try {
-    if (!comparePasswords(user.password, userDB.password)) {
+    if (!comparePasswords(req.body.password, companyExistsInDb.password)) {
       return res.send(errors.incorrectLoginParams);
     }
 
@@ -53,6 +52,8 @@ const login = async (req, res) => {
   } catch (err) {
     res.send({ error: err.message });
   }
+
+  res.json({ id: companyExistsInDb._id });
 };
 
 const getCompanyById = async (req, res) => {
